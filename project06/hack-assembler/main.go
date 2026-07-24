@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -11,7 +12,7 @@ import (
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Println("Usage: ./hack-assembler <filename.asm>")
+		log.Println("Usage: ./hack-assembler <filename.asm>")
 		os.Exit(1)
 	}
 
@@ -21,8 +22,7 @@ func main() {
 
 	parser, err := NewParser(filename)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 
 	symbolTable := NewSymbolTable()
@@ -91,7 +91,6 @@ func main() {
 	}
 
 	if err := os.WriteFile(outputFile, buf.Bytes(), 0644); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 }
